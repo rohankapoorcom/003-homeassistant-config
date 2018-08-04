@@ -57,6 +57,10 @@ sensor: !include_dir_merge_list sensors
 tts:
   platform: google
 
+zwave:
+  usb_path: /dev/zwave
+  network_key: !secret zwave.network_key
+
 automation old: !include_dir_list automations
 automation: !include automations.yaml
 script: !include_dir_named scripts
