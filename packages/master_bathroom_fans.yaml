@@ -1,0 +1,215 @@
+###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  08/05/2018
+#  @package      :  Master Bathroom Fans
+#  @description  :  Controls both bathroom fans in the master bathroom.
+#                   Includes timers and synchronizes with the roof extraction
+#                   fan.
+###############################################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'master_bathroom_fans'
+
+      timer_defaults: &timer_defaults
+        duration: 1200
+
+    input_number.master_bathroom_roof_extraction_fan_users:
+      <<: *customize
+
+    timer.master_bathroom_wc_fan_timer:
+      <<: *customize
+    timer.master_bathroom_shower_fan_timer:
+      <<: *customize
+
+    activate_master_bathroom_wc_fan_timer:
+      <<: *customize
+    deactivate_master_bathroom_wc_fan_timer:
+      <<: *customize
+    deactivate_master_bathroom_wc_fan_when_timer_finishes:
+      <<: *customize
+    activate_master_bathroom_shower_fan_timer:
+      <<: *customize
+    deactivate_master_bathroom_shower_fan_timer:
+      <<: *customize
+    deactivate_master_bathroom_shower_fan_when_timer_finishes:
+      <<: *customize
+    increment_master_bathroom_roof_extraction_fan_users:
+      <<: *customize
+    decrement_master_bathroom_roof_extraction_fan_users:
+      <<: *customize
+    activate_master_bathroom_roof_extraction_fan:
+      <<: *customize
+    deactivate_master_bathroom_roof_extraction_fan:
+      <<: *customize
+
+input_number:
+  master_bathroom_roof_extraction_fan_users:
+    name: Master Bathroom Roof Extraction Fan Users
+    min: 0
+    max: 2
+    step: 1
+
+timer:
+  master_bathroom_wc_fan_timer:
+    name: Master Bathroom WC Fan Timer
+    <<: *timer_defaults
+
+  master_bathroom_shower_fan_timer:
+    name: Master Bathroom Shower Fan Timer
+    <<: *timer_defaults
+
+################################################
+## Automation
+################################################
+
+automation:
+  ################################################
+  ## Master Bathroom WC Fan & Timer
+  ################################################
+
+  - id: activate_master_bathroom_wc_fan_timer
+    alias: Activate Master Bathroom WC Fan Timer
+    trigger:
+      - platform: state
+        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_5
+        to: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.master_bathroom_wc_fan_timer
+        data:
+          <<: *timer_defaults
+
+  - id: deactivate_master_bathroom_wc_fan_timer
+    alias: Deactivate Master Bathroom WC Fan Timer
+    trigger:
+      - platform: state
+        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_5
+        to: 'off'
+    action:
+      - service: timer.cancel
+        entity_id: timer.master_bathroom_wc_fan_timer
+
+  - id: deactivate_master_bathroom_wc_fan_when_timer_finishes
+    alias: Deactivate Master Bathroom WC Fan when Timer Finishes
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.master_bathroom_wc_fan_timer
+    action:
+      - service: switch.turn_off
+        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_5
+
+  ################################################
+  ## Guest Bathroom Fan & Timer
+  ################################################
+
+  - id: activate_master_bathroom_shower_fan_timer
+    alias: Activate Master Bathroom Shower Fan Timer
+    trigger:
+      - platform: state
+        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_6
+        to: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.master_bathroom_shower_fan_timer
+        data:
+          <<: *timer_defaults
+
+  - id: deactivate_master_bathroom_shower_fan_timer
+    alias: Deactivate Master Bathroom Shower Fan Timer
+    trigger:
+      - platform: state
+        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_6
+        to: 'off'
+    action:
+      - service: timer.cancel
+        entity_id: timer.master_bathroom_shower_fan_timer
+
+  - id: deactivate_master_bathroom_shower_fan_when_timer_finishes
+    alias: Deactivate Master Bathroom Shower Fan when Timer Finishes
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.master_bathroom_shower_fan_timer
+    action:
+      - service: switch.turn_off
+        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_6
+
+  ################################################
+  ## Master Bathroom Roof Extraction Fan
+  ################################################
+
+  - id: increment_master_bathroom_roof_extraction_fan_users
+    alias: Increment Master Bathroom Roof Extraction Fan Users
+    trigger:
+      - platform: state
+        entity_id:
+          - switch.zooz_unknown_typeb111_id1e1c_switch_5
+          - switch.zooz_unknown_typeb111_id1e1c_switch_6
+        to: 'on'
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.master_bathroom_roof_extraction_fan_users
+          value: >
+            {% if states.input_number.master_bathroom_roof_extraction_fan_users.state | int < states.input_number.master_bathroom_roof_extraction_fan_users.attributes.max %}
+              {{ (states.input_number.master_bathroom_roof_extraction_fan_users.state | int) + 1 }}
+            {% else %}
+              {{ states.input_number.master_bathroom_roof_extraction_fan_users.state | int }}
+            {% endif %}
+
+  - id: decrement_master_bathroom_roof_extraction_fan_users
+    alias: Decrement Master Bathroom Roof Extraction Fan Users
+    trigger:
+      - platform: state
+        entity_id:
+          - switch.zooz_unknown_typeb111_id1e1c_switch_5
+          - switch.zooz_unknown_typeb111_id1e1c_switch_6
+        to: 'off'
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.master_bathroom_roof_extraction_fan_users
+          value: >
+            {% if states.input_number.master_bathroom_roof_extraction_fan_users.state | int > states.input_number.master_bathroom_roof_extraction_fan_users.attributes.min %}
+              {{ (states.input_number.master_bathroom_roof_extraction_fan_users.state | int) - 1 }}
+            {% else %}
+              {{ states.input_number.master_bathroom_roof_extraction_fan_users.state | int }}
+            {% endif %}
+
+  - id: activate_master_bathroom_roof_extraction_fan
+    alias: Activate Master Bathroom Roof Extraction Fan
+    trigger:
+      - platform: state
+        entity_id: input_number.master_bathroom_roof_extraction_fan_users
+    action:
+      - service: switch.turn_on
+        entity_id: switch.zooz_zen15_power_switch_switch_3
+    condition:
+      - condition: numeric_state
+        entity_id: input_number.master_bathroom_roof_extraction_fan_users
+        value_template: '{{ states.input_number.master_bathroom_roof_extraction_fan_users.state | int }}'
+        above: 0
+
+  - id: deactivate_master_bathroom_roof_extraction_fan
+    alias: Deactivate Master Bathroom Roof Extraction Fan
+    trigger:
+      - platform: state
+        entity_id: input_number.master_bathroom_roof_extraction_fan_users
+    action:
+      - service: switch.turn_off
+        entity_id: switch.zooz_zen15_power_switch_switch_3
+    condition:
+      - condition: numeric_state
+        entity_id: input_number.master_bathroom_roof_extraction_fan_users
+        value_template: '{{ states.input_number.master_bathroom_roof_extraction_fan_users.state | int }}'
+        below: 1
