@@ -14,8 +14,40 @@ homeassistant:
     ################################################
 
     package.node_anchors:
+      customize: &customize
+        package: 'amar_and_guest_bathroom_fans'
+
       timer_defaults: &timer_defaults
         duration: 1200
+
+    input_number.amar_roof_extraction_fan_users:
+      <<: *customize
+
+    timer.amar_bathroom_fan_timer:
+      <<: *customize
+    timer.guest_bathroom_fan_timer:
+      <<: *customize
+
+    activate_amar_bathroom_fan_timer:
+      <<: *customize
+    deactivate_amar_bathroom_fan_timer:
+      <<: *customize
+    deactivate_amar_bathroom_fan_when_timer_finishes:
+      <<: *customize
+    activate_guest_bathroom_fan_timer:
+      <<: *customize
+    deactivate_guest_bathroom_fan_timer:
+      <<: *customize
+    deactivate_guest_bathroom_fan_when_timer_finishes:
+      <<: *customize
+    increment_amar_roof_extraction_fan_users:
+      <<: *customize
+    decrement_amar_roof_extraction_fan_users:
+      <<: *customize
+    activate_amar_roof_extraction_fan:
+      <<: *customize
+    deactivate_amar_roof_extraction_fan:
+      <<: *customize
 
 input_number:
   amar_roof_extraction_fan_users:
