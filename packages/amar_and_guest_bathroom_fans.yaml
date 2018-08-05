@@ -17,7 +17,7 @@ automation:
     action:
       - service: input_number.set_value
         data_template:
-          entity_id: amar_roof_extraction_fan_users
+          entity_id: input_number.amar_roof_extraction_fan_users
           value: >
             {% if states.input_number.amar_roof_extraction_fan_users.state | int < states.input_number.amar_roof_extraction_fan_users.attributes.max %}
               {{ (states.input_number.amar_roof_extraction_fan_users.state | int) + 1 }}
@@ -35,7 +35,7 @@ automation:
     action:
       - service: input_number.set_value
         data_template:
-          entity_id: amar_roof_extraction_fan_users
+          entity_id: input_number.amar_roof_extraction_fan_users
           value: >
             {% if states.input_number.amar_roof_extraction_fan_users.state | int > states.input_number.amar_roof_extraction_fan_users.attributes.min %}
               {{ (states.input_number.amar_roof_extraction_fan_users.state | int) - 1 }}
