@@ -63,6 +63,5 @@ zwave:
   network_key: !secret zwave.network_key
 
 automation old: !include_dir_list automations
-automation: !include automations.yaml
 script: !include_dir_named scripts
 shell_command: !include shell_commands.yaml

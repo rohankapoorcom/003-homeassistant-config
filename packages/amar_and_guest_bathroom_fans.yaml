@@ -1,3 +1,22 @@
+###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  08/05/2018
+#  @package      :  Amar And Guest Bathroom Fans
+#  @description  :  Controls bathroom fans for both Amar's and the guest rooms.
+#                   Includes timers and synchronizes with the roof extraction
+#                   fan.
+###############################################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      timer_defaults: &timer_defaults
+        duration: 1200
+
 input_number:
   amar_roof_extraction_fan_users:
     name: Amar's Roof Extraction Fan Users
@@ -5,7 +24,98 @@ input_number:
     max: 2
     step: 1
 
+timer:
+  amar_bathroom_fan_timer:
+    name: Amar's Bathroom Fan Timer
+    <<: *timer_defaults
+
+  guest_bathroom_fan_timer:
+    name: Guest Bathroom Fan Timer
+    <<: *timer_defaults
+
+################################################
+## Automation
+################################################
+
 automation:
+  ################################################
+  ## Amar's Bathroom Fan & Timer
+  ################################################
+
+  - id: activate_amar_bathroom_fan_timer
+    alias: Activate Amar's Bathroom Fan Timer
+    trigger:
+      - platform: state
+        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_2
+        to: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.amar_bathroom_fan_timer
+        data:
+          <<: *timer_defaults
+
+  - id: deactivate_amar_bathroom_fan_timer
+    alias: Deactivate Amar's Bathroom Fan Timer
+    trigger:
+      - platform: state
+        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_2
+        to: 'off'
+    action:
+      - service: timer.cancel
+        entity_id: timer.amar_bathroom_fan_timer
+
+  - id: deactivate_amar_bathroom_fan_when_timer_finishes
+    alias: Deactivate Amar's Bathroom Fan when Timer Finishes
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.amar_bathroom_fan_timer
+    action:
+      - service: switch.turn_off
+        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_2
+
+  ################################################
+  ## Guest Bathroom Fan & Timer
+  ################################################
+
+  - id: activate_guest_bathroom_fan_timer
+    alias: Activate Guest Bathroom Fan Timer
+    trigger:
+      - platform: state
+        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_3
+        to: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.guest_bathroom_fan_timer
+        data:
+          <<: *timer_defaults
+
+  - id: deactivate_guest_bathroom_fan_timer
+    alias: Deactivate Guest Bathroom Fan Timer
+    trigger:
+      - platform: state
+        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_3
+        to: 'off'
+    action:
+      - service: timer.cancel
+        entity_id: timer.guest_bathroom_fan_timer
+
+  - id: deactivate_guest_bathroom_fan_when_timer_finishes
+    alias: Deactivate Guest Bathroom Fan when Timer Finishes
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.guest_bathroom_fan_timer
+    action:
+      - service: switch.turn_off
+        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_3
+
+  ################################################
+  ## Amar's Roof Extraction Fan
+  ################################################
+
   - id: increment_amar_roof_extraction_fan_users
     alias: Increment Amar's Roof Extraction Fan Users
     trigger:
@@ -24,6 +134,7 @@ automation:
             {% else %}
               {{ states.input_number.amar_roof_extraction_fan_users.state | int }}
             {% endif %}
+
   - id: decrement_amar_roof_extraction_fan_users
     alias: Decrement Amar's Roof Extraction Fan Users
     trigger:
@@ -42,6 +153,7 @@ automation:
             {% else %}
               {{ states.input_number.amar_roof_extraction_fan_users.state | int }}
             {% endif %}
+
   - id: activate_amar_roof_extraction_fan
     alias: Activate Amar's Roof Extraction Fan
     trigger:
@@ -55,6 +167,7 @@ automation:
         entity_id: input_number.amar_roof_extraction_fan_users
         value_template: '{{ states.input_number.amar_roof_extraction_fan_users.state | int }}'
         above: 0
+
   - id: deactivate_amar_roof_extraction_fan
     alias: Deactivate Amar's Roof Extraction Fan
     trigger:

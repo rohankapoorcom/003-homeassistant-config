@@ -1,6 +1,0 @@
-- id: DUMMY
-  alias: This Does Nothing But Makes Packages Work
-  hide_entity: no # default no, hide from UI
-  trigger: []
-  action: []
-  condition: []
