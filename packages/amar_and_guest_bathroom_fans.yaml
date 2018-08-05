@@ -1,0 +1,70 @@
+input_number:
+  amar_roof_extraction_fan_users:
+    name: Amar's Roof Extraction Fan Users
+    min: 0
+    max: 2
+    step: 1
+
+automation:
+  - id: increment_amar_roof_extraction_fan_users
+    alias: Increment Amar's Roof Extraction Fan Users
+    trigger:
+      - platform: state
+        entity_id:
+        - switch.zooz_unknown_typeb111_id1e1c_switch_2
+        - switch.zooz_unknown_typeb111_id1e1c_switch_3
+        to: 'on'
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: amar_roof_extraction_fan_users
+          value: >
+            {% if states.input_number.amar_roof_extraction_fan_users.state | int < states.input_number.amar_roof_extraction_fan_users.attributes.max %}
+              {{ (states.input_number.amar_roof_extraction_fan_users.state | int) + 1 }}
+            {% else %}
+              {{ states.input_number.amar_roof_extraction_fan_users.state | int }}
+            {% endif %}
+  - id: decrement_amar_roof_extraction_fan_users
+    alias: Decrement Amar's Roof Extraction Fan Users
+    trigger:
+      - platform: state
+        entity_id:
+          - switch.zooz_unknown_typeb111_id1e1c_switch_2
+          - switch.zooz_unknown_typeb111_id1e1c_switch_3
+        to: 'off'
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: amar_roof_extraction_fan_users
+          value: >
+            {% if states.input_number.amar_roof_extraction_fan_users.state | int > states.input_number.amar_roof_extraction_fan_users.attributes.min %}
+              {{ (states.input_number.amar_roof_extraction_fan_users.state | int) - 1 }}
+            {% else %}
+              {{ states.input_number.amar_roof_extraction_fan_users.state | int }}
+            {% endif %}
+  - id: activate_amar_roof_extraction_fan
+    alias: Activate Amar's Roof Extraction Fan
+    trigger:
+      - platform: state
+        entity_id: input_number.amar_roof_extraction_fan_users
+    action:
+      - service: switch.turn_on
+        entity_id: switch.zooz_zen15_power_switch_switch
+    condition:
+      - condition: numeric_state
+        entity_id: input_number.amar_roof_extraction_fan_users
+        value_template: '{{ states.input_number.amar_roof_extraction_fan_users.state | int }}'
+        above: 0
+  - id: deactivate_amar_roof_extraction_fan
+    alias: Deactivate Amar's Roof Extraction Fan
+    trigger:
+      - platform: state
+        entity_id: input_number.amar_roof_extraction_fan_users
+    action:
+      - service: switch.turn_off
+        entity_id: switch.zooz_zen15_power_switch_switch
+    condition:
+      - condition: numeric_state
+        entity_id: input_number.amar_roof_extraction_fan_users
+        value_template: '{{ states.input_number.amar_roof_extraction_fan_users.state | int }}'
+        below: 1
