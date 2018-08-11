@@ -28,25 +28,25 @@ homeassistant:
     timer.master_bathroom_shower_fan_timer:
       <<: *customize
 
-    activate_master_bathroom_wc_fan_timer:
+    automation.activate_master_bathroom_wc_fan_timer:
       <<: *customize
-    deactivate_master_bathroom_wc_fan_timer:
+    automation.deactivate_master_bathroom_wc_fan_timer:
       <<: *customize
-    deactivate_master_bathroom_wc_fan_when_timer_finishes:
+    automation.deactivate_master_bathroom_wc_fan_when_timer_finishes:
       <<: *customize
-    activate_master_bathroom_shower_fan_timer:
+    automation.activate_master_bathroom_shower_fan_timer:
       <<: *customize
-    deactivate_master_bathroom_shower_fan_timer:
+    automation.deactivate_master_bathroom_shower_fan_timer:
       <<: *customize
-    deactivate_master_bathroom_shower_fan_when_timer_finishes:
+    automation.deactivate_master_bathroom_shower_fan_when_timer_finishes:
       <<: *customize
-    increment_master_bathroom_roof_extraction_fan_users:
+    automation.increment_master_bathroom_roof_extraction_fan_users:
       <<: *customize
-    decrement_master_bathroom_roof_extraction_fan_users:
+    automation.decrement_master_bathroom_roof_extraction_fan_users:
       <<: *customize
-    activate_master_bathroom_roof_extraction_fan:
+    automation.activate_master_bathroom_roof_extraction_fan:
       <<: *customize
-    deactivate_master_bathroom_roof_extraction_fan:
+    automation.deactivate_master_bathroom_roof_extraction_fan:
       <<: *customize
 
 input_number:

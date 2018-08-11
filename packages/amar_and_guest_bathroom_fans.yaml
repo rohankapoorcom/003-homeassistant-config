@@ -28,25 +28,25 @@ homeassistant:
     timer.guest_bathroom_fan_timer:
       <<: *customize
 
-    activate_amar_bathroom_fan_timer:
+    automation.activate_amars_bathroom_fan_timer:
       <<: *customize
-    deactivate_amar_bathroom_fan_timer:
+    automation.deactivate_amars_bathroom_fan_timer:
       <<: *customize
-    deactivate_amar_bathroom_fan_when_timer_finishes:
+    automation.deactivate_amars_bathroom_fan_when_timer_finishes:
       <<: *customize
-    activate_guest_bathroom_fan_timer:
+    automation.activate_guest_bathroom_fan_timer:
       <<: *customize
-    deactivate_guest_bathroom_fan_timer:
+    automation.deactivate_guest_bathroom_fan_timer:
       <<: *customize
-    deactivate_guest_bathroom_fan_when_timer_finishes:
+    automation.deactivate_guest_bathroom_fan_when_timer_finishes:
       <<: *customize
-    increment_amar_roof_extraction_fan_users:
+    automation.increment_amars_roof_extraction_fan_users:
       <<: *customize
-    decrement_amar_roof_extraction_fan_users:
+    automation.decrement_amars_roof_extraction_fan_users:
       <<: *customize
-    activate_amar_roof_extraction_fan:
+    automation.activate_amars_roof_extraction_fan:
       <<: *customize
-    deactivate_amar_roof_extraction_fan:
+    automation.deactivate_amars_roof_extraction_fan:
       <<: *customize
 
 input_number:
@@ -74,7 +74,7 @@ automation:
   ## Amar's Bathroom Fan & Timer
   ################################################
 
-  - id: activate_amar_bathroom_fan_timer
+  - id: activate_amars_bathroom_fan_timer
     alias: Activate Amar's Bathroom Fan Timer
     trigger:
       - platform: state
@@ -86,7 +86,7 @@ automation:
         data:
           <<: *timer_defaults
 
-  - id: deactivate_amar_bathroom_fan_timer
+  - id: deactivate_amars_bathroom_fan_timer
     alias: Deactivate Amar's Bathroom Fan Timer
     trigger:
       - platform: state
@@ -96,7 +96,7 @@ automation:
       - service: timer.cancel
         entity_id: timer.amar_bathroom_fan_timer
 
-  - id: deactivate_amar_bathroom_fan_when_timer_finishes
+  - id: deactivate_amars_bathroom_fan_when_timer_finishes
     alias: Deactivate Amar's Bathroom Fan when Timer Finishes
     trigger:
       - platform: event
@@ -148,7 +148,7 @@ automation:
   ## Amar's Roof Extraction Fan
   ################################################
 
-  - id: increment_amar_roof_extraction_fan_users
+  - id: increment_amars_roof_extraction_fan_users
     alias: Increment Amar's Roof Extraction Fan Users
     trigger:
       - platform: state
@@ -167,7 +167,7 @@ automation:
               {{ states.input_number.amar_roof_extraction_fan_users.state | int }}
             {% endif %}
 
-  - id: decrement_amar_roof_extraction_fan_users
+  - id: decrement_amars_roof_extraction_fan_users
     alias: Decrement Amar's Roof Extraction Fan Users
     trigger:
       - platform: state
@@ -186,7 +186,7 @@ automation:
               {{ states.input_number.amar_roof_extraction_fan_users.state | int }}
             {% endif %}
 
-  - id: activate_amar_roof_extraction_fan
+  - id: activate_amars_roof_extraction_fan
     alias: Activate Amar's Roof Extraction Fan
     trigger:
       - platform: state
@@ -200,7 +200,7 @@ automation:
         value_template: '{{ states.input_number.amar_roof_extraction_fan_users.state | int }}'
         above: 0
 
-  - id: deactivate_amar_roof_extraction_fan
+  - id: deactivate_amars_roof_extraction_fan
     alias: Deactivate Amar's Roof Extraction Fan
     trigger:
       - platform: state
