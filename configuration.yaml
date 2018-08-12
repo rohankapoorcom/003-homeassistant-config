@@ -52,8 +52,6 @@ logbook:
 # Track the sun
 sun:
 
-sensor: !include_dir_merge_list sensors
-
 # Text to speech
 tts:
   platform: google
@@ -63,5 +61,3 @@ zwave:
   network_key: !secret zwave.network_key
 
 automation old: !include_dir_list automations
-script: !include_dir_named scripts
-shell_command: !include shell_commands.yaml
