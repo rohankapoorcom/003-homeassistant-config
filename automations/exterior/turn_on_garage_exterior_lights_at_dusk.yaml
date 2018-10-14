@@ -1,9 +1,0 @@
-id: turn_on_garage_exterior_lights_at_dusk
-alias: Turn on Garage Exterior Lights at Dusk
-trigger:
-  - platform: state
-    entity_id: sun.sun
-    to: 'below_horizon'
-action:
-  - service: switch.turn_on
-    entity_id: switch.zooz_unknown_typeb111_id1e1c_switch
