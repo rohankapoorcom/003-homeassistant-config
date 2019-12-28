@@ -1,0 +1,27 @@
+###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  08/26/2018
+#  @package      :  Notifications
+#  @description  :  Manages all notification systems (text, voice, etc)
+###############################################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'notifications'
+
+mailgun:
+  domain: !secret mailgun.domain
+  api_key: !secret mailgun.api_key
+  sandbox: False
+
+notify:
+  - name: mailing_list
+    platform: mailgun
+    recipient: !secret notify.mailing_list.recipient
+    sender: !secret notify.mailing_list.sender

@@ -1,7 +1,6 @@
 secrets.yaml
 entity_registry.yaml
 .config_entries.json
-.HA_VERSION
 .uuid
 *.db
 *.log
@@ -11,3 +10,4 @@ entity_registry.yaml
 *.pyc
 tts
 __pycache__
+.idea
