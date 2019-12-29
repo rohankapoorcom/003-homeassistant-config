@@ -30,7 +30,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.hank_unknown_type0201_id000b
+          entity_id: zwave.library_scene_controller
           scene_id: 3
           scene_data: 0
     action:
