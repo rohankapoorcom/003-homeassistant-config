@@ -21,14 +21,11 @@ frontend:
 config:
 
 http:
-  # Uncomment this to add a password (recommended!)
-  api_password: !secret http.api_password
   # Uncomment this if you are using SSL or running in Docker etc
   base_url: !secret http.base_url
   use_x_forwarded_for: True
-  trusted_networks: !secret http.trusted_networks
   trusted_proxies: !secret http.trusted_proxies
-  ip_ban_enabled: True
+  ip_ban_enabled: False
   login_attempts_threshold: 3
 
 # Checks for available updates
