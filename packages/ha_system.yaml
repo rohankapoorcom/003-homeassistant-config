@@ -19,8 +19,11 @@ homeassistant:
       customize: &customize
         package: 'ha_system'
 
-      command_line_sensor_default: &defaults
+      defaults: &defaults
         scan_interval: 10
+
+      command_line_sensor_default: &command_line_sensor_defaults
+        <<: *defaults
         command_timeout: 5
 
     ################################################
@@ -87,12 +90,12 @@ sensor:
       - last_build_state
 
   - platform: command_line
-    <<: *defaults
+    <<: *command_line_sensor_defaults
     name: current_git_commit_id
     command: '/usr/bin/git -C /etc/homeassistant/ rev-parse HEAD'
 
   - platform: command_line
-    <<: *defaults
+    <<: *command_line_sensor_defaults
     name: current_git_commit_time
     command: '/usr/bin/git -C /etc/homeassistant/ log -1 --format="%at" | /usr/bin/xargs -I{} /bin/date -ud @{} +"%Y-%m-%dT%H:%M:%S.000Z"'
 
@@ -101,12 +104,12 @@ sensor:
     name: current_version
 
   - platform: command_line
-    <<: *defaults
+    <<: *command_line_sensor_defaults
     name: desired_version
     command: '/bin/cat /etc/homeassistant/.HA_VERSION'
 
   - platform: command_line
-    <<: *defaults
+    <<: *command_line_sensor_defaults
     name: upgraded_version
     command: '/srv/homeassistant/bin/hass --version'
 
