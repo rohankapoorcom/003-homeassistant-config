@@ -65,5 +65,6 @@ tts:
 zwave:
   usb_path: /dev/zwave
   network_key: !secret zwave.network_key
+  config_path: openzwave/config/
 
 automation old: !include_dir_list automations
