@@ -1,0 +1,27 @@
+###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  10/14/2018
+#  @package      :  Security
+#  @description  :  Controls cameras, locks and other security devices
+###############################################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'security'
+
+zoneminder:
+  host: !secret zoneminder.host
+
+camera:
+  - platform: zoneminder
+
+ffmpeg:
+  ffmpeg_bin: /usr/bin/ffmpeg
+
+stream:
