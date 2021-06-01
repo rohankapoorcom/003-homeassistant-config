@@ -78,7 +78,7 @@ automation:
     alias: Activate Master Bathroom WC Fan Timer
     trigger:
       - platform: state
-        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_5
+        entity_id: switch.master_bathroom_wc_fan
         to: 'on'
     action:
       - service: timer.start
@@ -90,7 +90,7 @@ automation:
     alias: Deactivate Master Bathroom WC Fan Timer
     trigger:
       - platform: state
-        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_5
+        entity_id: switch.master_bathroom_wc_fan
         to: 'off'
     action:
       - service: timer.cancel
@@ -105,7 +105,7 @@ automation:
           entity_id: timer.master_bathroom_wc_fan_timer
     action:
       - service: switch.turn_off
-        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_5
+        entity_id: switch.master_bathroom_wc_fan
 
   ################################################
   ## Guest Bathroom Fan & Timer
@@ -115,7 +115,7 @@ automation:
     alias: Activate Master Bathroom Shower Fan Timer
     trigger:
       - platform: state
-        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_6
+        entity_id: switch.master_bathroom_shower_fan
         to: 'on'
     action:
       - service: timer.start
@@ -127,7 +127,7 @@ automation:
     alias: Deactivate Master Bathroom Shower Fan Timer
     trigger:
       - platform: state
-        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_6
+        entity_id: switch.master_bathroom_shower_fan
         to: 'off'
     action:
       - service: timer.cancel
@@ -142,7 +142,7 @@ automation:
           entity_id: timer.master_bathroom_shower_fan_timer
     action:
       - service: switch.turn_off
-        entity_id: switch.zooz_unknown_typeb111_id1e1c_switch_6
+        entity_id: switch.master_bathroom_shower_fan
 
   ################################################
   ## Master Bathroom Roof Extraction Fan
@@ -153,8 +153,8 @@ automation:
     trigger:
       - platform: state
         entity_id:
-          - switch.zooz_unknown_typeb111_id1e1c_switch_5
-          - switch.zooz_unknown_typeb111_id1e1c_switch_6
+          - switch.master_bathroom_wc_fan
+          - switch.master_bathroom_shower_fan
         to: 'on'
     action:
       - service: input_number.set_value
@@ -172,8 +172,8 @@ automation:
     trigger:
       - platform: state
         entity_id:
-          - switch.zooz_unknown_typeb111_id1e1c_switch_5
-          - switch.zooz_unknown_typeb111_id1e1c_switch_6
+          - switch.master_bathroom_wc_fan
+          - switch.master_bathroom_shower_fan
         to: 'off'
     action:
       - service: input_number.set_value
@@ -193,7 +193,7 @@ automation:
         entity_id: input_number.master_bathroom_roof_extraction_fan_users
     action:
       - service: switch.turn_on
-        entity_id: switch.zooz_zen15_power_switch_switch_3
+        entity_id: switch.master_bathroom_roof_extraction_fan
     condition:
       - condition: numeric_state
         entity_id: input_number.master_bathroom_roof_extraction_fan_users
@@ -207,7 +207,7 @@ automation:
         entity_id: input_number.master_bathroom_roof_extraction_fan_users
     action:
       - service: switch.turn_off
-        entity_id: switch.zooz_zen15_power_switch_switch_3
+        entity_id: switch.master_bathroom_roof_extraction_fan
     condition:
       - condition: numeric_state
         entity_id: input_number.master_bathroom_roof_extraction_fan_users

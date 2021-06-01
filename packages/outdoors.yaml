@@ -38,7 +38,7 @@ automation:
       to: 'below_horizon'
     action:
     - service: switch.turn_on
-      entity_id: switch.zooz_unknown_typeb111_id1e1c_switch
+      entity_id: switch.garage_exterior_lights
 
   - id: turn_off_garage_exterior_lights_at_dawn
     alias: Turn off Garage Exterior Lights at Dawn
@@ -48,4 +48,4 @@ automation:
       to: 'above_horizon'
     action:
     - service: switch.turn_off
-      entity_id: switch.zooz_unknown_typeb111_id1e1c_switch
+      entity_id: switch.garage_exterior_lights

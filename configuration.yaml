@@ -60,11 +60,6 @@ system_health:
 
 # Text to speech
 tts:
-        platform: google_translate
-
-zwave:
-  usb_path: /dev/zwave
-  network_key: !secret zwave.network_key
-  config_path: /etc/homeassistant/openzwave/config/
+  platform: google_translate
 
 automation old: !include_dir_list automations
