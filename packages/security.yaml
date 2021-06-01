@@ -15,11 +15,10 @@ homeassistant:
       customize: &customize
         package: 'security'
 
-zoneminder:
-  host: !secret zoneminder.host
-
 camera:
-  - platform: zoneminder
+  - platform: ffmpeg
+    name: Fish 1
+    input: !secret camera.ffmpeg.fish1.input
 
 ffmpeg:
   ffmpeg_bin: /usr/bin/ffmpeg
