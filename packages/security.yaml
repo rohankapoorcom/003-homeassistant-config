@@ -20,6 +20,8 @@ camera:
     name: Fish 1
     input: !secret camera.ffmpeg.fish1.input
 
+amcrest: !secret amcrest
+
 ffmpeg:
   ffmpeg_bin: /usr/bin/ffmpeg
 
