@@ -62,4 +62,5 @@ system_health:
 tts:
   platform: google_translate
 
+automation: !include automations.yaml
 automation old: !include_dir_list automations
