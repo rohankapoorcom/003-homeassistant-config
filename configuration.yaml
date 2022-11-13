@@ -34,9 +34,6 @@ http:
   ip_ban_enabled: False
   login_attempts_threshold: 3
 
-# Checks for available updates
-updater:
-
 # Discover some devices automatically
 discovery:
 
