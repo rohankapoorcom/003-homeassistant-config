@@ -1,0 +1,53 @@
+---
+blueprint:
+  name: Scheduled Light
+  description: Turn a light on & off on a schedule.
+  domain: automation
+  source_url: https://github.com/rohankapoorcom/003-homeassistant-config/blob/master/blueprints/automation/rohankapoorcom/scheduled_light.yaml
+  input:
+    light_target:
+      name: Light
+      description: The lights to control automatically.
+      selector:
+        entity:
+          domain: light
+    schedule_entity:
+      name: Schedule
+      description: You can create an Schedule under Settings > Devices & Services > Helpers.
+      selector:
+        entity:
+          domain: schedule
+
+mode: restart
+max_exceeded: silent
+
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: automation_reloaded
+  - platform: state
+    entity_id: !input schedule_entity
+
+action:
+  - choose:
+      - alias: If the schedule_entity is on, then turn on the light_target.
+        conditions:
+          - condition: state
+            entity_id: !input schedule_entity
+            state: 'on'
+        sequence:
+          - choose:
+              - alias: If the light_target is not on, then turn it on.
+                conditions:
+                  - condition: state
+                    entity_id: !input light_target
+                    state: 'off'
+                sequence:
+                  - service: light.turn_on
+                    target:
+                      entity_id: !input light_target
+    default:
+      - service: light.turn_off
+        target:
+          entity_id: !input light_target
