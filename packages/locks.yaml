@@ -12,7 +12,7 @@ template:
   - trigger:
       - platform: zwave_js.value_updated
         entity_id: lock.garage_door_lock
-        command_class: Configuration
+        command_class: 112
         property: Auto Relock
     binary_sensor:
       - name: Auto Relock Enabled
