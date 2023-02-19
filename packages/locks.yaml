@@ -13,7 +13,7 @@ template:
       - platform: zwave_js.value_updated
         entity_id: lock.garage_door_lock
         command_class: 112
-        property: Auto Relock
+        property: 2
     binary_sensor:
       - name: Auto Relock Enabled
         state: "{{ trigger.current_value == 'Enable'}}"
