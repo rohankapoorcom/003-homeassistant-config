@@ -1,0 +1,45 @@
+###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  02/19/2023
+#  @package      :  Locks
+#  @description  :  Automations and controls for locks
+###############################################################################
+
+################################################
+## Template
+################################################
+template:
+  - trigger:
+      - platform: zwave_js.value_updated
+        entity_id: lock.garage_door_lock
+        command_class_name: Configuration
+        property_name: Auto Relock
+    binary_sensor:
+      - name: Auto Relock Enabled
+        state: "{{ trigger.current_value == 'Enable'}}"
+    unique_id: 625d355f-00e8-4e00-b8f8-c807109d171d
+
+################################################
+## Switch
+################################################
+switch:
+  - platform: template
+    switches:
+      enable_auto_relock:
+        value_template: "{{ is_state('binary_sensor.auto_relock_enabled', 'on') }}"
+        turn_on:
+          service: zwave_js.set_config_parameter
+          data:
+            parameter: Auto Relock
+            value: Enable
+          target:
+            entity_id: lock.garage_door_lock
+        turn_off:
+          service: zwave_js.set_config_parameter
+          data:
+            parameter: Auto Relock
+            value: Disable
+          target:
+            entity_id: lock.garage_door_lock
+        friendly_name: Enable Auto Relock
+        unique_id: a8e5de88-c7b7-419d-a7ef-696c69ded4a7
