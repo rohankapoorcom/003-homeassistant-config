@@ -79,26 +79,30 @@ homeassistant:
 ## Sensor
 ################################################
 
-sensor:
-  - platform: command_line
+command_line:
+  - sensor:
     <<: *command_line_sensor_defaults
     name: current_git_commit_id
     command: '/usr/bin/git -C /etc/homeassistant/ rev-parse HEAD'
+    unique_id: b2baf567-afb8-4b44-a1ee-1a9db7f03c9e
 
-  - platform: command_line
+  - sensor:
     <<: *command_line_sensor_defaults
     name: current_git_commit_time
     command: '/usr/bin/git -C /etc/homeassistant/ log -1 --format="%at" | /usr/bin/xargs -I{} /bin/date -ud @{} +"%Y-%m-%dT%H:%M:%S.000Z"'
+    unique_id: 70e009eb-38f2-4bc7-b757-3a2f819833d6
 
-  - platform: command_line
+  - sensor:
     <<: *command_line_sensor_defaults
     name: desired_version
     command: '/bin/cat /etc/homeassistant/.HA_VERSION'
+    unique_id: b598c94e-04c9-4d7a-94eb-4dc5fb6e61f4
 
-  - platform: command_line
+  - sensor:
     <<: *command_line_sensor_defaults
     name: upgraded_version
     command: '/srv/homeassistant/bin/hass --version'
+    unique_id: 815960ce-f440-4cb8-b0f1-d55da809feee
 
 ################################################
 ## Automation
