@@ -34,9 +34,6 @@ http:
   ip_ban_enabled: False
   login_attempts_threshold: 3
 
-# Discover some devices automatically
-discovery:
-
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
