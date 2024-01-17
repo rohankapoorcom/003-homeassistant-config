@@ -41,6 +41,7 @@ automation:
                 conditions:
                   - condition: sun
                     after: sunset
+                    after_offset: "-0:15:00"
                   - condition: sun
                     before: sunrise
             sequence:
@@ -77,6 +78,7 @@ automation:
                 conditions:
                   - condition: sun
                     after: sunset
+                    after_offset: "-0:15:00"
                   - condition: sun
                     before: sunrise
             sequence:
