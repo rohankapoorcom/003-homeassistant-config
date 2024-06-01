@@ -1,0 +1,37 @@
+###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  05/31/2024
+#  @package      :  Master Bedrooms
+#  @description  :  Automations in the Master Bedroom
+###############################################################################
+
+################################################
+## Fan
+################################################
+fan:
+  - platform: template
+    fans:
+      master_bedroom_fan:
+        friendly_name: Master Bedroom Fan
+        unique_id: 9d34e6d1-58fc-4feb-8499-fc397483dcaf
+        value_template: "{{is_state('light.master_bedroom_fan', 'on')}}"
+        percentage_template: >
+          {{ (state_attr('light.master_bedroom_fan', 'brightness') | float(0) * 0.392)  | round(0)}}
+        turn_on:
+          service: light.turn_on
+          target:
+            entity_id:
+              - light.master_bedroom_fan
+        turn_off:
+          service: light.turn_off
+          target:
+            entity_id:
+              - light.master_bedroom_fan
+        set_percentage:
+          service: light.turn_on
+          data:
+            brightness_pct: "{{ percentage }}"
+          target:
+            entity_id:
+              - light.master_bedroom_fan
+        speed_count: 3
