@@ -1,0 +1,54 @@
+###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  12/31/2023
+#  @package      :  Hallway
+#  @description  :  Manages devices in the hallway
+###############################################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'outdoors'
+
+################################################
+## Automation
+################################################
+automation:
+  - id: a0c79981-25ad-4b1c-b6de-c18e2fd0ceed
+    alias: Manage the Hallway Lights
+    trigger:
+      - platform: numeric_state
+        entity_id: sun.sun
+        attribute: elevation
+        below: -5.0
+      - platform: homeassistant
+        event: start
+      - platform: event
+        event_type: automation_reloaded
+      - platform: time
+        at: "00:00:00"
+    action:
+      - choose:
+          - alias: If the sun is low enough, then turn on the hallway lights.
+            conditions:
+              - condition: numeric_state
+                entity_id: sun.sun
+                attribute: elevation
+                below: -5.0
+              - condition: time
+                after: "12:00:00"
+            sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: light.hallway_lights
+                data:
+                  brightness_pct: 100
+        default:
+          - service: light.turn_off
+            target:
+              entity_id: light.hallway_lights

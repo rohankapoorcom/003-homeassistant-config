@@ -15,37 +15,81 @@ homeassistant:
       customize: &customize
         package: 'outdoors'
 
-    ################################################
-    ## Automation
-    ################################################
-
-    automation.turn_on_garage_exterior_lights_at_dusk:
-      <<: *customize
-
-    automation.turn_off_garage_exterior_lights_at_dawn:
-      <<: *customize
-
 ################################################
 ## Automation
 ################################################
 automation:
 
-  - id: turn_on_garage_exterior_lights_at_dusk
-    alias: Turn on Garage Exterior Lights at Dusk
+  - id: eb962a09-eb64-4a54-bd9f-a8ee12e1493c
+    alias: Manage the Garage Exterior Lights
     trigger:
-    - platform: state
-      entity_id: sun.sun
-      to: 'below_horizon'
+      - platform: state
+        entity_id: sun.sun
+        to: 'below_horizon'
+      - platform: state
+        entity_id: sun.sun
+        to: 'above_horizon'
+      - platform: homeassistant
+        event: start
+      - platform: event
+        event_type: automation_reloaded
     action:
-    - service: switch.turn_on
-      entity_id: switch.garage_exterior_lights
+      - choose:
+          - alias: If it's after sunset or before sunrise, then turn on the lights.
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: sun
+                    after: sunset
+                    after_offset: "-0:15:00"
+                  - condition: sun
+                    before: sunrise
+            sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: light.garage_exterior_lights
+          - alias: If it's after sunrise, then turn off the lights.
+            conditions:
+              - condition: sun
+                after: sunrise
+            sequence:
+              - service: light.turn_off
+                target:
+                  entity_id: light.garage_exterior_lights
 
-  - id: turn_off_garage_exterior_lights_at_dawn
-    alias: Turn off Garage Exterior Lights at Dawn
+  - id: 2453b77a-30be-441b-a355-74a77268b768
+    alias: Manage the Front Door Exterior Lights
     trigger:
-    - platform: state
-      entity_id: sun.sun
-      to: 'above_horizon'
+      - platform: state
+        entity_id: sun.sun
+        to: 'below_horizon'
+      - platform: state
+        entity_id: sun.sun
+        to: 'above_horizon'
+      - platform: homeassistant
+        event: start
+      - platform: event
+        event_type: automation_reloaded
     action:
-    - service: switch.turn_off
-      entity_id: switch.garage_exterior_lights
+      - choose:
+          - alias: If it's after sunset or before sunrise, then turn on the lights.
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: sun
+                    after: sunset
+                    after_offset: "-0:15:00"
+                  - condition: sun
+                    before: sunrise
+            sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: light.front_door_exterior_lights
+          - alias: If it's after sunrise, then turn off the lights.
+            conditions:
+              - condition: sun
+                after: sunrise
+            sequence:
+              - service: light.turn_off
+                target:
+                  entity_id: light.front_door_exterior_lights
