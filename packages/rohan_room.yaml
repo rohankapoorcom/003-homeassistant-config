@@ -1,0 +1,17 @@
+###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  06/08/2024
+#  @package      :  Rohan's Room
+#  @description  :  Manages devices Rohan's Room
+###############################################################################
+
+automation:
+  - id: 28d01d2b-5d80-4abe-9cc3-26f2edee613b
+    alias: Control Rohan's Closet Lights
+    description: Utilizes the motion_light blueprint for controlling Rohan's Closet Lights.
+    use_blueprint:
+      path: rohankapoorcom/motion_light.yaml
+      input:
+        motion_entity: binary_sensor.rohan_closet_door
+        light_target: light.rohan_closet_lights
+        no_motion_wait: 0
