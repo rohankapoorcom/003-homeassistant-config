@@ -93,3 +93,46 @@ automation:
               - service: light.turn_off
                 target:
                   entity_id: light.front_door_exterior_lights
+
+  - id: ec2ae516-1e3d-4134-9f2a-6d67c12d7de9
+    alias: Manage the Garden Exterior Lights
+    trigger:
+      - platform: state
+        entity_id: sun.sun
+        to: 'below_horizon'
+      - platform: state
+        entity_id: sun.sun
+        to: 'above_horizon'
+      - platform: homeassistant
+        event: start
+      - platform: event
+        event_type: automation_reloaded
+    action:
+      - choose:
+          - alias: If it's after sunset or before sunrise, then turn on the lights.
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: sun
+                    after: sunset
+                    after_offset: "-0:15:00"
+                  - condition: sun
+                    before: sunrise
+            sequence:
+              - service: light.turn_on
+                target:
+                  entity_id:
+                    - light.exterior_lights_cherry_tree
+                    - light.exterior_lights_maple_tree
+                    - light.exterior_lights_driveway_end
+          - alias: If it's after sunrise, then turn off the lights.
+            conditions:
+              - condition: sun
+                after: sunrise
+            sequence:
+              - service: light.turn_off
+                target:
+                  entity_id:
+                    - light.exterior_lights_cherry_tree
+                    - light.exterior_lights_maple_tree
+                    - light.exterior_lights_driveway_end
