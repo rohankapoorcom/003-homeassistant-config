@@ -47,7 +47,7 @@ automation:
       path: rohankapoorcom/inovelli-red-series-night-mode.yaml
       input:
         zwave_device: 942407d971d64b514e0bc7cb9ff644cb
-        bedtime: '17:00:00'
+        bedtime: '21:00:00'
         bedtime_brightness: 2
         wakeup_time: '08:00:00'
         wakeup_time_brightness: 99
