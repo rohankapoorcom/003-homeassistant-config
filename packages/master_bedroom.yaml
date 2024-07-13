@@ -51,3 +51,28 @@ automation:
         bedtime_brightness: 2
         wakeup_time: '08:00:00'
         wakeup_time_brightness: 99
+  
+  - id: a223a1d3-8aa7-4ec2-85b6-7c8538b561b0
+    alias: Master Bedroom Remote Controls
+    description: "Utilizes a blueprint to control the light and fan in the Master Bedroom via remote."
+    use_blueprint:
+      path: rwalker777/Zen37-ZwaveJS-blueprint.yaml
+      input:
+        zen37lr:
+          - 0fa34d93a7b489fd964767762d2b36c1
+        button_1_1_tap:
+          - service: light.toggle
+            target:
+              entity_id: light.master_bedroom_lights
+        button_2_1_tap:
+          - service: fan.toggle
+            target:
+              entity_id: fan.master_bedroom_fan
+        button_3_1_tap:
+          - service: fan.decrease_speed
+            target:
+              entity_id: fan.master_bedroom_fan
+        button_4_1_tap:
+          - service: fan.increase_speed
+            target:
+              entity_id: fan.master_bedroom_fan
