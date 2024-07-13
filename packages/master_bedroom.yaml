@@ -35,3 +35,19 @@ fan:
             entity_id:
               - light.master_bedroom_fan
         speed_count: 3
+
+################################################
+## Automation
+################################################
+automation:
+  - id: 919f9df7-9160-47c1-b854-9db94174bcc7
+    alias: Adjust the Master Bedroom Default Brightness
+    description: Utilizes a blueprint to configure the default brightess on the Master Bedroom Lights.
+    use_blueprint:
+      path: rohankapoorcom/inovelli-red-series-night-mode.yaml
+      input:
+        zwave_device: 942407d971d64b514e0bc7cb9ff644cb
+        bedtime: '17:00:00'
+        bedtime_brightness: 2
+        wakeup_time: '08:00:00'
+        wakeup_time_brightness: 99
