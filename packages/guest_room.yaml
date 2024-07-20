@@ -1,0 +1,17 @@
+###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  07/20/2024
+#  @package      :  Guest Room
+#  @description  :  Manages devices in the Guest Room
+###############################################################################
+
+automation:
+  - id: 6841223b-9711-4581-b2ee-60c0278cfede
+    alias: Control Guest Room Closet Lights
+    description: Utilizes the motion_light blueprint for controlling the Guest Room Closet Lights.
+    use_blueprint:
+      path: rohankapoorcom/motion_light.yaml
+      input:
+        motion_entity: binary_sensor.guest_room_closet_door
+        light_target: light.guest_room_closet_lights
+        no_motion_wait: 0
