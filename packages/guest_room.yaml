@@ -35,7 +35,7 @@ automation:
             - if:
                 - condition: state
                   entity_id: switch.guest_bathroom_floor_heater_switch
-                  state: on
+                  state: "on"
               then:
                 - service: climate.turn_on
                   entity_id: climate.guest_bathroom_heater
