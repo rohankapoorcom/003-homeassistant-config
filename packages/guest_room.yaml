@@ -15,3 +15,44 @@ automation:
         motion_entity: binary_sensor.guest_room_closet_door
         light_target: light.guest_room_closet_lights
         no_motion_wait: 0
+
+  - id: 657a280f-0bd6-4126-9003-a2c56fade359
+    alias: Control Guest Bathroom Heater
+    description: Syncs the State of the Inovelli Light Switch with the Guest Bathroom Heater.
+    trigger:
+      - platform: state
+        entity_id: switch.guest_bathroom_floor_heater_switch
+        id: "switch_state_changed"
+      - platform: state
+        entity_id: climate.guest_bathroom_heater
+        id: "climate_state_changed"
+    action:
+      - choose:
+        - conditions:
+          - condition: trigger
+            id: "switch_state_changed"
+          sequence:
+            - if:
+                - condition: state
+                  entity_id: switch.guest_bathroom_floor_heater_switch
+                  state: on
+              then:
+                - service: climate.turn_on
+                  entity_id: climate.guest_bathroom_heater
+              else:
+                - service: climate.turn_off
+                  entity_id: climate.guest_bathroom_heater
+        - conditions:
+          - condition: trigger
+            id: "climate_state_changed"
+          sequence:
+            - if:
+                - condition: state
+                  entity_id: climate.guest_bathroom_heater
+                  state: heat
+              then:
+                - service: switch.turn_on
+                  entity_id: switch.guest_bathroom_floor_heater_switch
+              else:
+                - service: switch.turn_off
+                  entity_id: switch.guest_bathroom_floor_heater_switch
