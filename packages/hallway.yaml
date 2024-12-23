@@ -21,18 +21,18 @@ homeassistant:
 automation:
   - id: a0c79981-25ad-4b1c-b6de-c18e2fd0ceed
     alias: Manage the Hallway Lights
-    trigger:
-      - platform: numeric_state
+    triggers:
+      - trigger: numeric_state
         entity_id: sun.sun
         attribute: elevation
         below: -5.0
-      - platform: homeassistant
+      - trigger: homeassistant
         event: start
-      - platform: event
+      - trigger: event
         event_type: automation_reloaded
-      - platform: time
+      - trigger: time
         at: "00:00:00"
-    action:
+    actions:
       - choose:
           - alias: If the sun is low enough, then turn on the hallway lights.
             conditions:
@@ -43,12 +43,12 @@ automation:
               - condition: time
                 after: "12:00:00"
             sequence:
-              - service: light.turn_on
+              - action: light.turn_on
                 target:
                   entity_id: light.hallway_lights
                 data:
                   brightness_pct: 100
         default:
-          - service: light.turn_off
+          - action: light.turn_off
             target:
               entity_id: light.hallway_lights

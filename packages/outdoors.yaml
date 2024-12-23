@@ -22,18 +22,18 @@ automation:
 
   - id: eb962a09-eb64-4a54-bd9f-a8ee12e1493c
     alias: Manage the Garage Exterior Lights
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: sun.sun
         to: 'below_horizon'
-      - platform: state
+      - trigger: state
         entity_id: sun.sun
         to: 'above_horizon'
-      - platform: homeassistant
+      - trigger: homeassistant
         event: start
-      - platform: event
+      - trigger: event
         event_type: automation_reloaded
-    action:
+    actions:
       - choose:
           - alias: If it's after sunset or before sunrise, then turn on the lights.
             conditions:
@@ -45,7 +45,7 @@ automation:
                   - condition: sun
                     before: sunrise
             sequence:
-              - service: light.turn_on
+              - action: light.turn_on
                 target:
                   entity_id: light.garage_exterior_lights
           - alias: If it's after sunrise, then turn off the lights.
@@ -53,24 +53,24 @@ automation:
               - condition: sun
                 after: sunrise
             sequence:
-              - service: light.turn_off
+              - action: light.turn_off
                 target:
                   entity_id: light.garage_exterior_lights
 
   - id: 2453b77a-30be-441b-a355-74a77268b768
     alias: Manage the Front Door Exterior Lights
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: sun.sun
         to: 'below_horizon'
-      - platform: state
+      - trigger: state
         entity_id: sun.sun
         to: 'above_horizon'
-      - platform: homeassistant
+      - trigger: homeassistant
         event: start
-      - platform: event
+      - trigger: event
         event_type: automation_reloaded
-    action:
+    actions:
       - choose:
           - alias: If it's after sunset or before sunrise, then turn on the lights.
             conditions:
@@ -82,7 +82,7 @@ automation:
                   - condition: sun
                     before: sunrise
             sequence:
-              - service: light.turn_on
+              - action: light.turn_on
                 target:
                   entity_id: light.front_door_exterior_lights
           - alias: If it's after sunrise, then turn off the lights.
@@ -90,24 +90,24 @@ automation:
               - condition: sun
                 after: sunrise
             sequence:
-              - service: light.turn_off
+              - action: light.turn_off
                 target:
                   entity_id: light.front_door_exterior_lights
 
   - id: ec2ae516-1e3d-4134-9f2a-6d67c12d7de9
     alias: Manage the Garden Exterior Lights
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: sun.sun
         to: 'below_horizon'
-      - platform: state
+      - trigger: state
         entity_id: sun.sun
         to: 'above_horizon'
-      - platform: homeassistant
+      - trigger: homeassistant
         event: start
-      - platform: event
+      - trigger: event
         event_type: automation_reloaded
-    action:
+    actions:
       - choose:
           - alias: If it's after sunset or before sunrise, then turn on the lights.
             conditions:
@@ -119,7 +119,7 @@ automation:
                   - condition: sun
                     before: sunrise
             sequence:
-              - service: light.turn_on
+              - action: light.turn_on
                 target:
                   entity_id:
                     - light.exterior_lights_cherry_tree
@@ -130,7 +130,7 @@ automation:
               - condition: sun
                 after: sunrise
             sequence:
-              - service: light.turn_off
+              - action: light.turn_off
                 target:
                   entity_id:
                     - light.exterior_lights_cherry_tree

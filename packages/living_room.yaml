@@ -9,17 +9,17 @@ automation:
   - id: 3a0dc198-d275-46ff-a588-54a2375d1c34
     alias: Control Living Room Lamp
     description: Syncs the State of the Inovelli Light Switch with the Living Room Lamp.
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: light.living_room_lights
-    action:
+    actions:
       - if:
           - condition: state
             entity_id: light.living_room_lights
             state: "on"
         then:
-          - service: light.turn_on
+          - action: light.turn_on
             entity_id: light.living_room_lamp
         else:
-          - service: light.turn_off
+          - action: light.turn_off
             entity_id: light.living_room_lamp

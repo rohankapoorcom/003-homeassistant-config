@@ -76,35 +76,35 @@ automation:
 
   - id: activate_master_bathroom_wc_fan_timer
     alias: Activate Master Bathroom WC Fan Timer
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: switch.master_bathroom_wc_fan
         to: 'on'
-    action:
-      - service: timer.start
+    actions:
+      - action: timer.start
         entity_id: timer.master_bathroom_wc_fan_timer
         data:
           <<: *timer_defaults
 
   - id: deactivate_master_bathroom_wc_fan_timer
     alias: Deactivate Master Bathroom WC Fan Timer
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: switch.master_bathroom_wc_fan
         to: 'off'
-    action:
-      - service: timer.cancel
+    actions:
+      - action: timer.cancel
         entity_id: timer.master_bathroom_wc_fan_timer
 
   - id: deactivate_master_bathroom_wc_fan_when_timer_finishes
     alias: Deactivate Master Bathroom WC Fan when Timer Finishes
-    trigger:
-      - platform: event
+    triggers:
+      - trigger: event
         event_type: timer.finished
         event_data:
           entity_id: timer.master_bathroom_wc_fan_timer
-    action:
-      - service: switch.turn_off
+    actions:
+      - action: switch.turn_off
         entity_id: switch.master_bathroom_wc_fan
 
   ################################################
@@ -113,35 +113,35 @@ automation:
 
   - id: activate_master_bathroom_shower_fan_timer
     alias: Activate Master Bathroom Shower Fan Timer
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: switch.master_bathroom_shower_fan
         to: 'on'
-    action:
-      - service: timer.start
+    actions:
+      - action: timer.start
         entity_id: timer.master_bathroom_shower_fan_timer
         data:
           <<: *timer_defaults
 
   - id: deactivate_master_bathroom_shower_fan_timer
     alias: Deactivate Master Bathroom Shower Fan Timer
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: switch.master_bathroom_shower_fan
         to: 'off'
-    action:
-      - service: timer.cancel
+    actions:
+      - action: timer.cancel
         entity_id: timer.master_bathroom_shower_fan_timer
 
   - id: deactivate_master_bathroom_shower_fan_when_timer_finishes
     alias: Deactivate Master Bathroom Shower Fan when Timer Finishes
-    trigger:
-      - platform: event
+    triggers:
+      - trigger: event
         event_type: timer.finished
         event_data:
           entity_id: timer.master_bathroom_shower_fan_timer
-    action:
-      - service: switch.turn_off
+    actions:
+      - action: switch.turn_off
         entity_id: switch.master_bathroom_shower_fan
 
   ################################################
@@ -150,14 +150,14 @@ automation:
 
   - id: increment_master_bathroom_roof_extraction_fan_users
     alias: Increment Master Bathroom Roof Extraction Fan Users
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id:
           - switch.master_bathroom_wc_fan
           - switch.master_bathroom_shower_fan
         to: 'on'
-    action:
-      - service: input_number.set_value
+    actions:
+      - action: input_number.set_value
         data_template:
           entity_id: input_number.master_bathroom_roof_extraction_fan_users
           value: >
@@ -170,14 +170,14 @@ automation:
 
   - id: decrement_master_bathroom_roof_extraction_fan_users
     alias: Decrement Master Bathroom Roof Extraction Fan Users
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id:
           - switch.master_bathroom_wc_fan
           - switch.master_bathroom_shower_fan
         to: 'off'
-    action:
-      - service: input_number.set_value
+    actions:
+      - action: input_number.set_value
         data_template:
           entity_id: input_number.master_bathroom_roof_extraction_fan_users
           value: >
@@ -190,13 +190,13 @@ automation:
 
   - id: activate_master_bathroom_roof_extraction_fan
     alias: Activate Master Bathroom Roof Extraction Fan
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: input_number.master_bathroom_roof_extraction_fan_users
-    action:
-      - service: switch.turn_on
+    actions:
+      - action: switch.turn_on
         entity_id: switch.master_bathroom_roof_extraction_fan
-    condition:
+    conditions:
       - condition: numeric_state
         entity_id: input_number.master_bathroom_roof_extraction_fan_users
         value_template: "{{ states('input_number.master_bathroom_roof_extraction_fan_users') | int }}"
@@ -204,13 +204,13 @@ automation:
 
   - id: deactivate_master_bathroom_roof_extraction_fan
     alias: Deactivate Master Bathroom Roof Extraction Fan
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id: input_number.master_bathroom_roof_extraction_fan_users
-    action:
-      - service: switch.turn_off
+    actions:
+      - action: switch.turn_off
         entity_id: switch.master_bathroom_roof_extraction_fan
-    condition:
+    conditions:
       - condition: numeric_state
         entity_id: input_number.master_bathroom_roof_extraction_fan_users
         value_template: "{{ states('input_number.master_bathroom_roof_extraction_fan_users') | int }}"

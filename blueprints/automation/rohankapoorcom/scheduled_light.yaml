@@ -21,15 +21,15 @@ blueprint:
 mode: restart
 max_exceeded: silent
 
-trigger:
-  - platform: homeassistant
+triggers:
+  - trigger: homeassistant
     event: start
-  - platform: event
+  - trigger: event
     event_type: automation_reloaded
-  - platform: state
+  - trigger: state
     entity_id: !input schedule_entity
 
-action:
+actions:
   - choose:
       - alias: If the schedule_entity is on, then turn on the light_target.
         conditions:
@@ -44,10 +44,10 @@ action:
                     entity_id: !input light_target
                     state: 'off'
                 sequence:
-                  - service: light.turn_on
+                  - action: light.turn_on
                     target:
                       entity_id: !input light_target
     default:
-      - service: light.turn_off
+      - action: light.turn_off
         target:
           entity_id: !input light_target
