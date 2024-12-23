@@ -1,0 +1,25 @@
+###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  12/23/2024
+#  @package      :  Living Room
+#  @description  :  Manages devices in the Living ROom
+###############################################################################
+
+automation:
+  - id: 3a0dc198-d275-46ff-a588-54a2375d1c34
+    alias: Control Living Room Lamp
+    description: Syncs the State of the Inovelli Light Switch with the Living Room Lamp.
+    trigger:
+      - platform: state
+        entity_id: light.living_room_lights
+    action:
+        - if:
+            - condition: state
+              entity_id: light.living_room_lights
+              state: "on"
+          then:
+            - service: light.turn_on
+              entity_id: light.living_room_lamp
+          else:
+            - service: light.turn_off
+              entity_id: light.living_room_lamp
