@@ -16,7 +16,7 @@ homeassistant:
         package: 'security'
 
 camera:
-  - trigger: ffmpeg
+  - platform: ffmpeg
     name: Fish 1
     input: !secret camera.ffmpeg.fish1.input
 

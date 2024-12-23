@@ -9,7 +9,7 @@
 ## Fan
 ################################################
 fan:
-  - trigger: template
+  - platform: template
     fans:
       master_bedroom_fan:
         friendly_name: Master Bedroom Fan
