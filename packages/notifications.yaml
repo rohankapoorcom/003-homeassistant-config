@@ -4,7 +4,7 @@
 #  @package      :  Notifications
 #  @description  :  Manages all notification systems (text, voice, etc)
 ###############################################################################
-
+---
 homeassistant:
   customize:
     ################################################
@@ -18,7 +18,7 @@ homeassistant:
 mailgun:
   domain: !secret mailgun.domain
   api_key: !secret mailgun.api_key
-  sandbox: False
+  sandbox: false
 
 notify:
   - name: mailing_list

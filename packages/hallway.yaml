@@ -4,7 +4,7 @@
 #  @package      :  Hallway
 #  @description  :  Manages devices in the hallway
 ###############################################################################
-
+---
 homeassistant:
   customize:
     ################################################

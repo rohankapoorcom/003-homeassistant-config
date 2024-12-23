@@ -1,3 +1,4 @@
+---
 homeassistant:
   # Name of the location where Home Assistant is running
   name: Home
@@ -10,7 +11,6 @@ homeassistant:
   elevation: 349
   # metric for Metric, imperial for Imperial
   unit_system: imperial
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/New_York
   customize: !include customize.yaml
   packages: !include_dir_named packages
@@ -31,9 +31,9 @@ config:
 
 http:
   # Uncomment this if you are using SSL or running in Docker etc
-  use_x_forwarded_for: True
+  use_x_forwarded_for: true
   trusted_proxies: !secret http.trusted_proxies
-  ip_ban_enabled: False
+  ip_ban_enabled: false
   login_attempts_threshold: 3
 
 # Allows you to issue voice commands from the frontend in enabled browsers

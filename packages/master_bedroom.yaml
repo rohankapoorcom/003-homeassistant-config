@@ -4,7 +4,7 @@
 #  @package      :  Master Bedrooms
 #  @description  :  Automations in the Master Bedroom
 ###############################################################################
-
+---
 ################################################
 ## Fan
 ################################################
@@ -51,7 +51,7 @@ automation:
         bedtime_brightness: 2
         wakeup_time: '08:00:00'
         wakeup_time_brightness: 99
-  
+
   - id: a223a1d3-8aa7-4ec2-85b6-7c8538b561b0
     alias: Master Bedroom Remote Controls
     description: "Utilizes a blueprint to control the light and fan in the Master Bedroom via remote."

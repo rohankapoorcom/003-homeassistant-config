@@ -6,7 +6,7 @@
 #                   Includes timers and synchronizes with the roof extraction
 #                   fan.
 ###############################################################################
-
+---
 homeassistant:
   customize:
     ################################################
@@ -161,10 +161,11 @@ automation:
         data_template:
           entity_id: input_number.master_bathroom_roof_extraction_fan_users
           value: >
-            {% if states.input_number.master_bathroom_roof_extraction_fan_users.state | int < states.input_number.master_bathroom_roof_extraction_fan_users.attributes.max %}
-              {{ (states.input_number.master_bathroom_roof_extraction_fan_users.state | int) + 1 }}
+            {% if states('input_number.master_bathroom_roof_extraction_fan_users') | int
+                < state_attr('input_number.master_bathroom_roof_extraction_fan_users', 'max') %}
+              {{ (states('input_number.master_bathroom_roof_extraction_fan_users') | int) + 1 }}
             {% else %}
-              {{ states.input_number.master_bathroom_roof_extraction_fan_users.state | int }}
+              {{ states('input_number.master_bathroom_roof_extraction_fan_users') | int }}
             {% endif %}
 
   - id: decrement_master_bathroom_roof_extraction_fan_users
@@ -180,10 +181,11 @@ automation:
         data_template:
           entity_id: input_number.master_bathroom_roof_extraction_fan_users
           value: >
-            {% if states.input_number.master_bathroom_roof_extraction_fan_users.state | int > states.input_number.master_bathroom_roof_extraction_fan_users.attributes.min %}
-              {{ (states.input_number.master_bathroom_roof_extraction_fan_users.state | int) - 1 }}
+            {% if states('input_number.master_bathroom_roof_extraction_fan_users') | int
+                > state_attr('input_number.master_bathroom_roof_extraction_fan_users', 'min') %}
+              {{ (states('input_number.master_bathroom_roof_extraction_fan_users') | int) - 1 }}
             {% else %}
-              {{ states.input_number.master_bathroom_roof_extraction_fan_users.state | int }}
+              {{ states('input_number.master_bathroom_roof_extraction_fan_users') | int }}
             {% endif %}
 
   - id: activate_master_bathroom_roof_extraction_fan
@@ -197,7 +199,7 @@ automation:
     condition:
       - condition: numeric_state
         entity_id: input_number.master_bathroom_roof_extraction_fan_users
-        value_template: '{{ states.input_number.master_bathroom_roof_extraction_fan_users.state | int }}'
+        value_template: "{{ states('input_number.master_bathroom_roof_extraction_fan_users') | int }}"
         above: 0
 
   - id: deactivate_master_bathroom_roof_extraction_fan
@@ -211,5 +213,5 @@ automation:
     condition:
       - condition: numeric_state
         entity_id: input_number.master_bathroom_roof_extraction_fan_users
-        value_template: '{{ states.input_number.master_bathroom_roof_extraction_fan_users.state | int }}'
+        value_template: "{{ states('input_number.master_bathroom_roof_extraction_fan_users') | int }}"
         below: 1

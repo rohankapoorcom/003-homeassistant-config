@@ -4,7 +4,7 @@
 #  @package      :  Rohan's Room
 #  @description  :  Manages devices Rohan's Room
 ###############################################################################
-
+---
 automation:
   - id: 28d01d2b-5d80-4abe-9cc3-26f2edee613b
     alias: Control Rohan's Closet Lights

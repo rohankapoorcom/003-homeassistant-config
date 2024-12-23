@@ -10,20 +10,20 @@ on:
 
 jobs:
 
-  # yamllint:
-  #   name: yamllint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Check out configuration from GitHub
-  #       uses: actions/checkout@v2
-  #     - name: Run yamllint
-  #       uses: frenck/action-yamllint@v1
+  yamllint:
+    name: yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out configuration from GitHub
+        uses: actions/checkout@v4
+      - name: Run yamllint
+        uses: frenck/action-yamllint@v1
   home-assistant:
     name: Home Assistant Config Check
     runs-on: ubuntu-latest
     steps:
       - name: Check out configuration from GitHub
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Run Home Assistant Core Configuration Check
         uses: frenck/action-home-assistant@v1
         with:
