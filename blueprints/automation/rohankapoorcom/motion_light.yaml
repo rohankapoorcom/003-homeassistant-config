@@ -60,8 +60,8 @@ actions:
                   - action: light.turn_on
                     target:
                       entity_id: !input light_target
-          - wait_for_triggers:
-              platform: state
+          - wait_for_trigger:
+              trigger: state
               entity_id: !input motion_entity
               from: 'on'
               to: 'off'
