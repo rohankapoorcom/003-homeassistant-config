@@ -23,3 +23,5 @@ automation:
         else:
           - action: light.turn_off
             entity_id: light.living_room_lamp
+    mode: restart
+    max_exceeded: silent
