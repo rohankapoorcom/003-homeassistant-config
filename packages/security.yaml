@@ -15,13 +15,6 @@ homeassistant:
       customize: &customize
         package: 'security'
 
-camera:
-  - platform: ffmpeg
-    name: Fish 1
-    input: !secret camera.ffmpeg.fish1.input
-
-amcrest: !secret amcrest
-
 ffmpeg:
   ffmpeg_bin: /usr/bin/ffmpeg
 
