@@ -136,3 +136,54 @@ automation:
                     - light.exterior_lights_cherry_tree
                     - light.exterior_lights_maple_tree
                     - light.exterior_lights_driveway_end
+  
+  - id: c1789adb-ff1e-424d-8b85-65f307bf995d
+    alias: Control the Garage Lights
+    mode: restart
+    max_exceeded: silent
+    triggers:
+      - trigger: homeassistant
+        event: start
+      - trigger: event
+        event_type: automation_reloaded
+      - trigger: state
+        entity_id: cover.anu_garage_door
+        from: 'closed'
+        to: 'open'
+      - trigger: state
+        entity_id: cover.rakesh_garage_door
+        from: 'closed'
+        to: 'open'
+    action:
+      - choose:
+          - alias: If either garage door is open, then turn on the lights.
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity_id: cover.anu_garage_door
+                    state: 'open'
+                  - condition: state
+                    entity_id: cover.rakesh_garage_door
+                    state: 'open'
+            sequence:
+              - action: light.turn_on
+                target:
+                  entity_id:
+                    - light.garage_lights
+              - wait_for_trigger:
+                  - platform: template
+                    value_template: >
+                      {{ is_state('cover.anu_garage_door', 'closed')
+                      and is_state('cover.rakesh_garage_door', 'closed') }}
+                continue_on_timeout: false
+              - delay:
+                  minutes: 10
+              - service: light.turn_off
+                target:
+                  entity_id:
+                    - light.garage_lights
+        default:
+          - service: light.turn_off
+            entity_id:
+              - light.garage_lights
