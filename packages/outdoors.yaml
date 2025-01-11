@@ -136,7 +136,7 @@ automation:
                     - light.exterior_lights_cherry_tree
                     - light.exterior_lights_maple_tree
                     - light.exterior_lights_driveway_end
-  
+
   - id: c1789adb-ff1e-424d-8b85-65f307bf995d
     alias: Control the Garage Lights
     mode: restart
