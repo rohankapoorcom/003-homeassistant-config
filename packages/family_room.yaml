@@ -1,0 +1,40 @@
+automation:
+  - id: 28dd9f30-e3e5-4071-900c-3a15a30fc16f
+    alias: Manage the Family Room Roller Shades
+    description: Automatically open/close the Family Room Roller Shades based on the Sun Position
+    triggers:
+      - trigger: sun
+        event: sunset
+      - trigger: sun
+        event: sunrise
+        offset: '+1:30:00'
+      - trigger: homeassistant
+        event: start
+      - trigger: event
+        event_type: automation_reloaded
+    actions:
+      - choose:
+          - alias: If it's after sunset or before sunrise, then close the shades.
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: sun
+                    after: sunset
+                  - condition: sun
+                    before: sunrise
+                    before_offset: '+1:30:00'
+            sequence:
+              # - wait_template: "{{ is_state('binary_sensor.living_room_windows', 'off') }}"
+              - action: cover.close_cover
+                target:
+                  entity_id: cover.family_room_shades
+          - alias: If it's 90 minutes after sunrise, then open the shade.
+            conditions:
+              - condition: sun
+                after: sunrise
+                after_offset: '+1:30:00'
+            sequence:
+              - action: cover.open_cover
+                target:
+                  entity_id: cover.family_room_shades
+    mode: single
