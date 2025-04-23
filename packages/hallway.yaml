@@ -52,3 +52,13 @@ automation:
           - action: light.turn_off
             target:
               entity_id: light.hallway_lights
+
+  - id: 09ed178f-72c6-432e-9902-eeafb87c04b8
+    alias: Control Hallway Closet Lights
+    description: Utilizes the motion_light blueprint for controlling the Closet Lights in the Hallway.
+    use_blueprint:
+      path: rohankapoorcom/motion_light.yaml
+      input:
+        motion_entity: binary_sensor.hallway_closet_door
+        light_target: light.hallway_closet_lights
+        no_motion_wait: 0
