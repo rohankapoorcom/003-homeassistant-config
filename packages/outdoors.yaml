@@ -125,6 +125,10 @@ automation:
                     - light.exterior_lights_cherry_tree
                     - light.exterior_lights_maple_tree
                     - light.exterior_lights_driveway_end
+                    - light.exterior_lights_walkway_lights
+                    - light.exterior_lights_bay_window_conifers
+                    - light.exterior_lights_forsythia_bed
+                    - light.exterior_lights_back_woods
           - alias: If it's after sunrise, then turn off the lights.
             conditions:
               - condition: sun
@@ -136,6 +140,10 @@ automation:
                     - light.exterior_lights_cherry_tree
                     - light.exterior_lights_maple_tree
                     - light.exterior_lights_driveway_end
+                    - light.exterior_lights_walkway_lights
+                    - light.exterior_lights_bay_window_conifers
+                    - light.exterior_lights_forsythia_bed
+                    - light.exterior_lights_back_woods
 
   - id: c1789adb-ff1e-424d-8b85-65f307bf995d
     alias: Control the Garage Lights
