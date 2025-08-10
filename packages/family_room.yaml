@@ -7,7 +7,7 @@ automation:
         event: sunset
       - trigger: sun
         event: sunrise
-        offset: '+1:30:00'
+        offset: '+4:00:00'
       - trigger: homeassistant
         event: start
       - trigger: event
@@ -28,11 +28,11 @@ automation:
               - action: cover.close_cover
                 target:
                   entity_id: cover.family_room_shades
-          - alias: If it's 90 minutes after sunrise, then open the shade.
+          - alias: If it's 4 hours after sunrise, then open the shade.
             conditions:
               - condition: sun
                 after: sunrise
-                after_offset: '+1:30:00'
+                after_offset: '+4:00:00'
             sequence:
               - action: cover.open_cover
                 target:
