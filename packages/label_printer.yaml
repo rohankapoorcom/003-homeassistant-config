@@ -1,0 +1,57 @@
+###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  08/09/2025
+#  @package      :  Label Printer
+#  @description  :  Logic for handling the label printer.
+###############################################################################
+---
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'label_printer'
+
+shell_command:
+  print_left_label: "/bin/bash /config/shell_command/print_left_label.sh '{{content}}' '{{copies}}'"
+  print_right_label: "/bin/bash /config/shell_command/print_right_label.sh '{{content}}' '{{copies}}'"
+
+automation:
+  - id: 9b1748d1-7cf1-4459-bb17-2936820e333f
+    alias: Print Left Label
+    triggers:
+      - trigger: state
+        entity_id: input_button.print_left_label
+    actions:
+      - action: shell_command.print_left_label
+        data:
+          content: >
+            {{ states('input_text.label_text_first') }}
+            {%- if states('input_text.label_text_second') != "" -%}
+              \n{{ states('input_text.label_text_second') }}
+            {%- endif -%}
+            {%- if states('input_text.label_text_third') != "" -%}
+              \n{{ states('input_text.label_text_third') }}
+            {%- endif -%}
+          copies: "{{ states('input_number.label_copies') | round(0) }}"
+
+  - id: e94111fb-6aa4-463a-9ac6-5e6020ecdfe5
+    alias: Print Right Label
+    triggers:
+      - trigger: state
+        entity_id: input_button.print_right_label
+    actions:
+      - action: shell_command.print_right_label
+        data:
+          content: >
+            {{ states('input_text.label_text_first') }}
+            {%- if states('input_text.label_text_second') != "" -%}
+              \n{{ states('input_text.label_text_second') }}
+            {%- endif -%}
+            {%- if states('input_text.label_text_third') != "" -%}
+              \n{{ states('input_text.label_text_third') }}
+            {%- endif -%}
+          copies: "{{ states('input_number.label_copies') | round(0) }}"

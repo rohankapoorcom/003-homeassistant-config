@@ -1,0 +1,2 @@
+#!/bin/bash
+/usr/bin/ssh -o StrictHostKeyChecking=accept-new -i /srv/homeassistant/.ssh/id_ed25519 lprint@003-lprint-01.dev.rohankapoor.com "convert -size 673x378 -background white -fill black -font 'AvantGarde-Book' -gravity Center label:'$1' label-right.png;/snap/bin/lprint -d 'Dymo LabelWriter Twin Turbo Right' label-right.png -n '$2'"
