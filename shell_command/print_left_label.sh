@@ -1,2 +1,2 @@
 #!/bin/bash
-/usr/bin/ssh -o StrictHostKeyChecking=accept-new -i /srv/homeassistant/.ssh/id_ed25519 lprint@003-lprint-01.dev.rohankapoor.com "convert -size 225x590 -background white -fill black -font 'AvantGarde-Book' -gravity Center label:'$1' label-left.png;/snap/bin/lprint -d 'Dymo LabelWriter Twin Turbo Left' label-left.png -n '$2' -o orientation-requested=landscape"
+/usr/bin/ssh -o StrictHostKeyChecking=accept-new -i /srv/homeassistant/.ssh/id_ed25519 lprint@003-lprint-01.dev.rohankapoor.com "convert -size 1066x342 -background white -fill black -font 'AvantGarde-Book' -gravity Center label:'$1' label-left.png;/snap/bin/lprint -d 'Dymo LabelWriter Twin Turbo Left' label-left.png -n '$2'"
