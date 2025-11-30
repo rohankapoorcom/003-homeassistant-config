@@ -1,0 +1,30 @@
+ ###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  11/30/2025
+#  @package      :  Alarm Closet
+#  @description  :  Manages devices in the alarm closet
+###############################################################################
+---
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'alarm_closet'
+
+################################################
+## Automation
+################################################
+automation:
+ - id: f6d851f1-47e8-447e-be7e-b862977d3ff2
+    alias: Control Alarm Closet Lights
+    description: Utilizes the motion_light blueprint for controlling the Alarm Closet Lights.
+    use_blueprint:
+      path: rohankapoorcom/motion_light.yaml
+      input:
+        motion_entity: binary_sensor.alarm_closet_door
+        light_target: light.alarm_closet_lights
+        no_motion_wait: 0

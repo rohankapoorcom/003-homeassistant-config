@@ -13,7 +13,7 @@ homeassistant:
 
     package.node_anchors:
       customize: &customize
-        package: 'outdoors'
+        package: 'hallway'
 
 ################################################
 ## Automation
