@@ -61,3 +61,5 @@ automation: !include automations.yaml
 automation old: !include_dir_list automations
 
 default_config:
+
+script: !include scripts.yaml
