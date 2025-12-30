@@ -28,3 +28,13 @@ automation:
         motion_entity: binary_sensor.alarm_closet_door
         light_target: light.alarm_closet_lights
         no_motion_wait: 0
+
+  - id: 72e87273-0c3f-4e1a-a450-5daf39cdea93
+    alias: Control Cedar Closet Lights
+    description: Utilizes the motion_light blueprint for controlling the Cedar Closet Lights.
+    use_blueprint:
+      path: rohankapoorcom/motion_light.yaml
+      input:
+        motion_entity: binary_sensor.cedar_closet_door
+        light_target: light.cedar_closet_lights
+        no_motion_wait: 0
