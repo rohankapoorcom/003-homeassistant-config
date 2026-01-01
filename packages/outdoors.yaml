@@ -57,6 +57,40 @@ automation:
                 target:
                   entity_id: light.garage_exterior_lights
 
+  - id: 28dc8832-551c-461a-b3d8-e2cb02c4a817
+    alias: Notify that the shed heater is on
+    description: Use Inovelli light switch LED indicators to notify the user that the shed heater is on.
+    mode: single
+    triggers:
+      - trigger: state
+        entity_id: switch.shed_heater
+      - trigger: homeassistant
+        event: start
+      - trigger: event
+        event_type: automation_reloaded
+    actions:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: switch.shed_heater
+                state: "on"
+            sequence:
+              - action: script.inovelli_led
+                data:
+                  label: backyard
+                  duration: Forever
+                  effect: Blink Fast
+                  color: Red
+                  brightness: 10
+        default:
+          - action: script.inovelli_led
+            data:
+              label: backyard
+              duration: Forever
+              effect: Clear Effect
+              color: Red
+              brightness: 10
+
   - id: 2453b77a-30be-441b-a355-74a77268b768
     alias: Manage the Front Door Exterior Lights
     triggers:
