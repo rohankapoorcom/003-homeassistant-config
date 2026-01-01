@@ -5,26 +5,3 @@
 #  @description  :  Automations and controls for locks
 ###############################################################################
 ---
-
-################################################
-## Switch
-################################################
-switch:
-  - platform: template
-    switches:
-      enable_auto_relock:
-        value_template: "{{ is_state('select.garage_door_lock_auto_relock', 'Enable') }}"
-        turn_on:
-          action: select.select_option
-          target:
-            entity_id: select.garage_door_lock_auto_relock
-          data:
-            option: Enable
-        turn_off:
-          action: select.select_option
-          target:
-            entity_id: select.garage_door_lock_auto_relock
-          data:
-            option: Disable
-        friendly_name: Enable Auto Relock
-        unique_id: a8e5de88-c7b7-419d-a7ef-696c69ded4a7
