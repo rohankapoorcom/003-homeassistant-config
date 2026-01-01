@@ -39,3 +39,37 @@ automation:
                 target:
                   entity_id: cover.family_room_shades
     mode: single
+
+  - id: 316fabab-021e-4da1-8aee-c5d865a5552c
+    alias: Manage the Family Room Lights
+    triggers:
+      - trigger: numeric_state
+        entity_id: sun.sun
+        attribute: elevation
+        below: -5.0
+      - trigger: homeassistant
+        event: start
+      - trigger: event
+        event_type: automation_reloaded
+      - trigger: time
+        at: "01:00:00"
+    actions:
+      - choose:
+          - alias: If the sun is low enough, then turn on the family room center lights.
+            conditions:
+              - condition: numeric_state
+                entity_id: sun.sun
+                attribute: elevation
+                below: -5.0
+              - condition: time
+                after: "12:00:00"
+            sequence:
+              - action: light.turn_on
+                target:
+                  entity_id: light.family_room_ceiling_lights_center
+                data:
+                  brightness_pct: 100
+        default:
+          - action: light.turn_off
+            target:
+              entity_id: light.family_room_ceiling_lights_center
