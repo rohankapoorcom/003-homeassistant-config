@@ -62,3 +62,13 @@ automation:
         motion_entity: binary_sensor.hallway_closet_door
         light_target: light.hallway_closet_lights
         no_motion_wait: 0
+
+  - id: a4610f24-d900-4780-847c-ea36de025afc
+    alias: Control Mudroom Closet Lights
+    description: Utilizes the motion_light blueprint for controlling the Mudroom Closet Lights.
+    use_blueprint:
+      path: rohankapoorcom/motion_light.yaml
+      input:
+        motion_entity: binary_sensor.mudroom_closet_door
+        light_target: light.mudroom_closet_lights
+        no_motion_wait: 0
