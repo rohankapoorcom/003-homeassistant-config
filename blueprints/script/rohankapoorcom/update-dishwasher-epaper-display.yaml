@@ -26,7 +26,7 @@ sequence:
   - action: open_epaper_link.drawcustom
     data:
       background: white
-      rotate: 0
+      rotate: 180
       ttl: 300
       dither: false
       payload:
