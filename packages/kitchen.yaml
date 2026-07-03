@@ -1,0 +1,68 @@
+###############################################################################
+#  @author       :  Rohan Kapoor
+#  @date         :  01/19/2026
+#  @package      :  Kitchen
+#  @description  :  Logic for handling items in the kitchen.
+###############################################################################
+---
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'kitchen'
+
+################################################
+## Script
+################################################
+script:
+  update_dishwasher_display:
+    use_blueprint:
+      path: rohankapoorcom/update-dishwasher-epaper-display.yaml
+      input:
+        epaper_tag: d15e08d4c5a9d613bd7f9295cfadf8e7
+
+################################################
+## Automation
+################################################
+automation:
+  - id: fbd7a7ca-eb6b-45c4-b536-27138e95810d
+    alias: Update Dishwasher Display
+    description: "Set Dishwasher Display status based on power usage"
+    use_blueprint:
+      path: >-
+        sbyx/notify-or-do-something-when-an-appliance-like-a-dishwasher-or-washing-machine-finishes.yaml
+      input:
+        power_sensor: sensor.dishwasher_power
+        starting_threshold: 10
+        finishing_threshold: 15
+        actions:
+          - action: script.update_dishwasher_display
+            data:
+              state: Clean
+        starting_hysteresis: 2
+        finishing_hysteresis: 10
+        pre_actions:
+          - action: script.update_dishwasher_display
+            data:
+              state: Running
+
+  - id: 819098b7-0743-41fa-aeb2-468d7aeebd03
+    alias: Dishwasher Display Button Triggers
+    description: Change the dishwasher display based on buttons triggered
+    use_blueprint:
+      path: rohankapoorcom/solum-m3-epaper-tag-buttons.yaml
+      input:
+        epaper_tag:
+          - d15e08d4c5a9d613bd7f9295cfadf8e7
+        button_1:
+          - action: script.update_dishwasher_display
+            data:
+              state: Clean
+        button_2:
+          - action: script.update_dishwasher_display
+            data:
+              state: Dirty
