@@ -75,13 +75,13 @@ sequence:
           y: 8
           size: 25
           color: red
-          anchor: mn
+          anchor: mt
         - type: icon
           value: arrow-up
           x: 259
           y: 8
           size: 25
           color: red
-          anchor: mn
+          anchor: mt
     target:
       device_id: !input epaper_tag
