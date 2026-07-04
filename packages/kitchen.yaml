@@ -16,6 +16,18 @@ homeassistant:
         package: 'kitchen'
 
 ################################################
+## Sensor
+################################################
+sensor:
+  - platform: statistics
+    name: Dishwasher Power Max 5min
+    unique_id: e4ad4893-48fb-4024-8077-620b68b35b87
+    entity_id: sensor.dishwasher_power
+    state_characteristic: value_max
+    max_age:
+      minutes: 5
+
+################################################
 ## Script
 ################################################
 script:
@@ -36,8 +48,8 @@ automation:
       path: >-
         sbyx/notify-or-do-something-when-an-appliance-like-a-dishwasher-or-washing-machine-finishes.yaml
       input:
-        power_sensor: sensor.dishwasher_power
-        starting_threshold: 10
+        power_sensor: sensor.dishwasher_power_max_5min
+        starting_threshold: 100
         finishing_threshold: 15
         actions:
           - action: script.update_dishwasher_display
