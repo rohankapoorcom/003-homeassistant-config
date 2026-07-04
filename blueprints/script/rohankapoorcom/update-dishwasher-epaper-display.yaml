@@ -45,7 +45,7 @@ sequence:
           y: 8
           size: 15
           color: black
-          anchor: ls
+          anchor: la
         - type: icon
           value: silverware-clean
           x: 40
@@ -75,13 +75,13 @@ sequence:
           y: 8
           size: 25
           color: red
-          anchor: mt
+          anchor: ms
         - type: icon
           value: arrow-up
           x: 259
           y: 8
           size: 25
           color: red
-          anchor: mt
+          anchor: ms
     target:
       device_id: !input epaper_tag
