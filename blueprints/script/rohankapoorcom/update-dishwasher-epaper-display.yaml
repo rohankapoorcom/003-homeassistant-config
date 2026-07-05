@@ -54,34 +54,34 @@ sequence:
           color: black
           anchor: mm
         - type: text
-          value: Clean
+          value: Dirty
           font: ppb.ttf
           x: 369
-          y: 38
+          y: 52
           size: 15
           color: black
           anchor: rs
         - type: text
-          value: Dirty
+          value: Clean
           font: ppb.ttf
           x: 284
-          y: 38
+          y: 52
           size: 15
           color: black
           anchor: rs
         - type: icon
           value: arrow-up
           x: 351
-          y: 8
+          y: 24
           size: 25
           color: red
-          anchor: ms
+          anchor: mm
         - type: icon
           value: arrow-up
           x: 259
-          y: 8
+          y: 24
           size: 25
           color: red
-          anchor: ms
+          anchor: mm
     target:
       device_id: !input epaper_tag
