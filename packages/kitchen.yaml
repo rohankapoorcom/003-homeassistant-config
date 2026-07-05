@@ -18,14 +18,30 @@ homeassistant:
 ################################################
 ## Sensor
 ################################################
+template:
+  - trigger:
+      - platform: state
+        entity_id: sensor.dishwasher_power
+      - platform: time_pattern
+        minutes: "/1"
+    sensor:
+      - name: Dishwasher Power Sampled
+        unique_id: 21499c92-79e0-4e6b-9343-968861f5df3f
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        state: "{{ states('sensor.dishwasher_power') | float(0) }}"
+
 sensor:
   - platform: statistics
     name: Dishwasher Power Max 5min
     unique_id: e4ad4893-48fb-4024-8077-620b68b35b87
-    entity_id: sensor.dishwasher_power
+    entity_id: sensor.dishwasher_power_sampled
     state_characteristic: value_max
     max_age:
       minutes: 5
+    sampling_size: 300
+    keep_last_sample: true
 
 ################################################
 ## Script
@@ -49,7 +65,7 @@ automation:
         sbyx/notify-or-do-something-when-an-appliance-like-a-dishwasher-or-washing-machine-finishes.yaml
       input:
         power_sensor: sensor.dishwasher_power_max_5min
-        starting_threshold: 100
+        starting_threshold: 50
         finishing_threshold: 15
         actions:
           - action: script.update_dishwasher_display
