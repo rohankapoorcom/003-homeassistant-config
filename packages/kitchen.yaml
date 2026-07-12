@@ -31,6 +31,8 @@ template:
         device_class: power
         state_class: measurement
         state: "{{ states('sensor.dishwasher_power') | float(0) }}"
+        attributes:
+          sampled_at: "{{ now().isoformat() }}"
 
 sensor:
   - platform: statistics
