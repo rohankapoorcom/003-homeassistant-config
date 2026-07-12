@@ -16,6 +16,39 @@ homeassistant:
         package: 'garage'
 
 ################################################
+## Template Sensor
+################################################
+template:
+  - trigger:
+      - platform: state
+        entity_id:
+          - cover.anu_garage_door_door
+          - cover.rakesh_garage_door_door
+        not_to:
+          - unavailable
+          - unknown
+        not_from:
+          - unavailable
+          - unknown
+    sensor:
+      - unique_id: cd33bea6-542f-4125-a81a-73f12cd75088
+        name: Garage Door Change History
+        state: "OK"
+        attributes:
+          changes: >
+            {% set current = this.attributes.get('changes', {}) %}
+            {% set new =
+              { trigger.entity_id:
+                {
+                  'datetime': trigger.to_state.last_changed.isoformat(),
+                  'from': trigger.from_state.state,
+                  'to': trigger.to_state.state
+                }
+              }
+            %}
+            {{ dict(current, **new) }}
+
+################################################
 ## Automation
 ################################################
 automation:
@@ -95,3 +128,58 @@ automation:
           - service: light.turn_off
             entity_id:
               - light.garage_lights
+
+  - id: 3bb40282-efbb-4a97-b3be-aac425bb1478
+    alias: Daily Garage Cleaning
+    description: >-
+      Cleans the garage every night at 8:30 PM using the garage vacuum
+      if either garage door has opened at least once in the last 24 hours.
+      Ensures both garage doors are closed before starting the cleaning run.
+    mode: single
+    triggers:
+      - trigger: time
+        at: '20:30:00'
+    conditions:
+      - alias: "Verify either garage door opened at least once in last 24 hours"
+        condition: template
+        value_template: >-
+          {% set changes = state_attr('sensor.garage_door_change_history', 'changes') %}
+          {% if changes is none %}
+            false
+          {% else %}
+            {% set ns = namespace(recent=false) %}
+            {% for door in ['cover.anu_garage_door_door', 'cover.rakesh_garage_door_door'] %}
+              {% if door in changes %}
+                {% set last_change = changes[door].datetime | as_datetime %}
+                {% if (as_timestamp(now()) - as_timestamp(last_change)) < 86400 %}
+                  {% set ns.recent = true %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+            {{ ns.recent }}
+          {% endif %}
+    actions:
+      - alias: "Wait up to 30 minutes for both garage doors to be closed"
+        wait_template: >-
+          {{ is_state('cover.anu_garage_door_door', 'closed')
+          and is_state('cover.rakesh_garage_door_door', 'closed') }}
+        timeout:
+          minutes: 30
+        continue_on_timeout: false
+      - action: select.select_option
+        target:
+          entity_id: select.valetudo_garage_vacuum_mode
+        data:
+          option: vacuum
+      - action: select.select_option
+        target:
+          entity_id: select.valetudo_garage_vacuum_fan
+        data:
+          option: max
+      - action: mqtt_vacuum_camera.vacuum_clean_segments
+        target:
+          entity_id: vacuum.valetudo_garage_vacuum
+        data:
+          segments:
+            - 1
+          repeats: 1
